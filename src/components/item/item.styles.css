@@ -1,0 +1,7 @@
+.column__item {
+  display: flex;
+  width: 100%;
+  background-color: #e8e8e8;
+  padding: 1rem;
+  border-radius: 5px;
+}

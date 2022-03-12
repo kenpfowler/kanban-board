@@ -1,38 +1,42 @@
-.App {
-  text-align: center;
+:root {
+  --background-primary: #282c34;
+  --background-accent: #16181d;
+  --background-text-primary: #ffffff;
+  --background-text-accent: #61dafb;
+  --header-height: 80px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+.container {
+  min-width: 100%;
+  width: fit-content;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+header {
+  height: 80px;
+  background-color: var(--background-accent);
+  color: var(--background-text-accent);
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
+  padding: 1rem;
+  width: 100%;
+}
+
+.kanban__board {
+  background-color: var(--background-primary);
+  min-height: calc(100vh - var(--header-height));
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  min-width: 100%;
+  width: fit-content;
+  gap: 1rem;
+  padding: 1rem;
+  overflow-x: scroll;
 }

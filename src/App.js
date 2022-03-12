@@ -1,23 +1,50 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useState } from 'react';
+import Column from './components/column/column.component';
+import {
+  useKanbanBoardContext,
+  useKanbanBoardUpdateContext,
+} from './KanbanBoardContext';
 
 function App() {
+  const [title, setTitle] = useState('');
+  const state = useKanbanBoardContext();
+  const { addColumn } = useKanbanBoardUpdateContext();
+  console.log(state);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <div className="container">
+      <header>
+        <h1>Kanban Board</h1>
+        <div>
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
+          />
+          <button
+            onClick={() => {
+              addColumn(title);
+              setTitle('');
+            }}
+          >
+            Create New List
+          </button>
+        </div>
       </header>
+      <div className="kanban__board">
+        {state.columnOrder.map((column) => {
+          return (
+            <Column
+              key={state.columns[column].id}
+              title={state.columns[column].title}
+              itemIds={state.columns[column].itemIds}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 }
