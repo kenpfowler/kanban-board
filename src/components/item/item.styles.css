@@ -5,3 +5,23 @@
   padding: 1rem;
   border-radius: 5px;
 }
+
+.column__item-dragging {
+  transition: background-color 0.5s ease;
+  background-color: var(--background-text-accent);
+}
+
+.column__item-handle {
+  height: 15px;
+  width: 15px;
+  background-color: var(--background-accent);
+  border-radius: 50%;
+}
+
+.column__item-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  vertical-align: center;
+}

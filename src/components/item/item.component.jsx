@@ -2,7 +2,7 @@ import React from 'react';
 import './item.styles.css';
 import { Draggable } from 'react-beautiful-dnd';
 
-const Item = ({ index, content, removeItem, itemId, columnId }) => {
+const Item = ({ index, content, itemId }) => {
   return (
     <Draggable draggableId={itemId} index={index}>
       {(provided, snapshot) => (
@@ -10,9 +10,16 @@ const Item = ({ index, content, removeItem, itemId, columnId }) => {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className="column__item"
+          className={
+            snapshot.isDragging
+              ? 'column__item column__item-dragging'
+              : 'column__item'
+          }
         >
-          {content}
+          <div className="column__item-content">
+            <div className="column__item-handle"></div>
+            {content}
+          </div>
         </div>
       )}
     </Draggable>
