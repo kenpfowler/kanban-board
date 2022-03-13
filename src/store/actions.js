@@ -1,5 +1,6 @@
 export const ACTIONS = {
   ADD_COLUMN: 'ADD_COLUMN',
+  MOVE_COLUMN: 'MOVE_COLUMN',
   ADD_ITEM: 'ADD_ITEM',
   MOVE_ITEM: 'MOVE_ITEM',
 };
