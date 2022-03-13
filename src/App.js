@@ -67,7 +67,7 @@ function App() {
             <div className="column__input">
               <input
                 type="text"
-                placeholder="Give your board a title..."
+                placeholder="Give your list a title..."
                 value={title}
                 onChange={(e) => {
                   setTitle(e.target.value);
