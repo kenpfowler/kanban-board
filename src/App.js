@@ -1,7 +1,7 @@
 import './App.css';
 import React, { useState, useCallback } from 'react';
 import Column from './components/column/column.component';
-import { DragDropContext } from 'react-beautiful-dnd';
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import {
   useKanbanBoardContext,
   useKanbanBoardUpdateContext,
@@ -10,7 +10,7 @@ import ReactIcon from './icons/react.icon';
 function App() {
   const [title, setTitle] = useState('');
   const state = useKanbanBoardContext();
-  const { addColumn, moveItem } = useKanbanBoardUpdateContext();
+  const { addColumn, moveItem, moveColumn } = useKanbanBoardUpdateContext();
   // using useCallback is optional
   const onBeforeCapture = useCallback(() => {
     /*...*/
@@ -28,7 +28,7 @@ function App() {
   const onDragEnd = useCallback(
     (result) => {
       // the only one that is required
-      const { destination, source } = result;
+      const { destination, source, type } = result;
       if (!destination) {
         return;
       }
@@ -40,9 +40,13 @@ function App() {
         return;
       }
 
-      moveItem(result);
+      if (type === 'column') {
+        moveColumn(result);
+      } else {
+        moveItem(result);
+      }
     },
-    [moveItem]
+    [moveItem, moveColumn]
   );
 
   return (
@@ -84,18 +88,32 @@ function App() {
             </div>
           </div>
         </header>
-        <div className="kanban__board">
-          {state.columnOrder.map((column) => {
-            return (
-              <Column
-                key={state.columns[column].id}
-                columnId={state.columns[column].id}
-                title={state.columns[column].title}
-                itemIds={state.columns[column].itemIds}
-              />
-            );
-          })}
-        </div>
+        <Droppable
+          droppableId="all-columns"
+          direction="horizontal"
+          type="column"
+        >
+          {(provided) => (
+            <div
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+              className="kanban__board"
+            >
+              {state.columnOrder.map((column, index) => {
+                return (
+                  <Column
+                    index={index}
+                    key={state.columns[column].id}
+                    columnId={state.columns[column].id}
+                    title={state.columns[column].title}
+                    itemIds={state.columns[column].itemIds}
+                  />
+                );
+              })}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
       </div>
     </DragDropContext>
   );
