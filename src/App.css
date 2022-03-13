@@ -27,6 +27,11 @@ header {
   width: 100%;
 }
 
+.header__logo-container {
+  display: flex;
+  flex-direction: row;
+}
+
 .kanban__board {
   background-color: var(--background-primary);
   min-height: calc(100vh - var(--header-height));
@@ -38,5 +43,31 @@ header {
   width: fit-content;
   gap: 1rem;
   padding: 1rem;
-  overflow-x: scroll;
+}
+
+.btn {
+  outline: none;
+  display: flex;
+  padding: 0.5rem 1rem;
+  border: none;
+  text-align: center;
+  transition: all 0.5s;
+  cursor: pointer;
+  min-width: fit-content;
+}
+
+.btn-primary {
+  color: white;
+  background-color: var(--background-accent);
+}
+.btn-primary:hover {
+  background-color: var(--background-primary);
+}
+
+.btn-secondary {
+  background-color: var(--background-accent);
+  color: black;
+}
+.btn-secondary:hover {
+  background-color: var(--background-primary);
 }
