@@ -30,10 +30,15 @@ export const KanbanBoardProvider = ({ children }) => {
     dispatch({ type: ACTIONS.MOVE_ITEM, payload: payload });
   };
 
+  const moveColumn = (payload) => {
+    dispatch({ type: ACTIONS.MOVE_COLUMN, payload: payload });
+  };
+
   const dispatchFunctions = {
     addColumn: addColumn,
     addItem: addItem,
     moveItem: moveItem,
+    moveColumn: moveColumn,
   };
 
   return (
