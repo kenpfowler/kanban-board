@@ -23,4 +23,11 @@
   display: flex;
   width: 100%;
   align-self: flex-end;
+  gap: 1rem;
+  justify-content: flex-end;
+}
+
+.column__input input {
+  width: 80%;
+  padding: 0rem 0.5rem;
 }
