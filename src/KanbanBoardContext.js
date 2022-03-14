@@ -34,11 +34,31 @@ export const KanbanBoardProvider = ({ children }) => {
     dispatch({ type: ACTIONS.MOVE_COLUMN, payload: payload });
   };
 
+  const removeColumn = (payload) => {
+    dispatch({ type: ACTIONS.REMOVE_COLUMN, payload: payload });
+  };
+
+  const removeItem = (payload) => {
+    dispatch({ type: ACTIONS.REMOVE_ITEM, payload: payload });
+  };
+
+  const updateItem = (payload) => {
+    dispatch({ type: ACTIONS.UPDATE_ITEM, payload: payload });
+  };
+
+  const updateColumn = (payload) => {
+    dispatch({ type: ACTIONS.UPDATE_COLUMN, payload: payload });
+  };
+
   const dispatchFunctions = {
     addColumn: addColumn,
     addItem: addItem,
     moveItem: moveItem,
     moveColumn: moveColumn,
+    removeColumn: removeColumn,
+    removeItem: removeItem,
+    updateColumn: updateColumn,
+    updateItem: updateItem,
   };
 
   return (

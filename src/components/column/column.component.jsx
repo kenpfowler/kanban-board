@@ -9,7 +9,7 @@ import {
 
 const Column = ({ title, itemIds, columnId, index }) => {
   const state = useKanbanBoardContext();
-  const { addItem } = useKanbanBoardUpdateContext();
+  const { addItem, removeItem, removeColumn } = useKanbanBoardUpdateContext();
   const [input, setInput] = useState('');
 
   return (
@@ -20,7 +20,11 @@ const Column = ({ title, itemIds, columnId, index }) => {
           ref={provided.innerRef}
           className="column"
         >
-          <h1 {...provided.dragHandleProps} className="column__title">
+          <h1
+            {...provided.dragHandleProps}
+            className="column__title"
+            onClick={() => removeColumn({ title: title })}
+          >
             {title}
           </h1>
           <Droppable droppableId={columnId} type="item">
@@ -42,6 +46,7 @@ const Column = ({ title, itemIds, columnId, index }) => {
                       content={state.items[itemId].content}
                       columnId={columnId}
                       itemId={state.items[itemId].id}
+                      removeItem={removeItem}
                     />
                   );
                 })}
