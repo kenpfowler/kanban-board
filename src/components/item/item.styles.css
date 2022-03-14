@@ -12,16 +12,15 @@
 }
 
 .column__item-handle {
-  height: 15px;
-  width: 15px;
-  background-color: var(--background-accent);
-  border-radius: 50%;
+  height: 20px;
+  width: 20px;
 }
 
 .column__item-content {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: 0.5rem;
   vertical-align: center;
+  width: 100%;
 }

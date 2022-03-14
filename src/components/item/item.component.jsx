@@ -1,8 +1,10 @@
 import React from 'react';
 import './item.styles.css';
+import DeleteLogo from './trash.svg';
+
 import { Draggable } from 'react-beautiful-dnd';
 
-const Item = ({ index, content, itemId }) => {
+const Item = ({ index, content, itemId, columnId, removeItem }) => {
   return (
     <Draggable draggableId={itemId} index={index}>
       {(provided, snapshot) => (
@@ -17,8 +19,19 @@ const Item = ({ index, content, itemId }) => {
           }
         >
           <div className="column__item-content">
-            <div className="column__item-handle"></div>
             {content}
+
+            <div
+              onClick={() => {
+                removeItem({ column_id: columnId, itemId: itemId });
+              }}
+            >
+              <img
+                src={DeleteLogo}
+                alt="trashcan"
+                className="column__item-handle"
+              />
+            </div>
           </div>
         </div>
       )}

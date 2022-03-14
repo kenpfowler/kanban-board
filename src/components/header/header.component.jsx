@@ -1,12 +1,12 @@
 import React from 'react';
-import ReactIcon from '../../icons/react.icon';
 import './header.styles.css';
+import ReactLogo from './react-icon.svg';
 
 const Header = ({ title, setTitle, addColumn }) => {
   return (
     <header>
       <div className="header__logo-container">
-        <ReactIcon />
+        <img src={ReactLogo} className="logo" alt="logo" />
         <h1>Kanban Board</h1>
       </div>
       <div>
