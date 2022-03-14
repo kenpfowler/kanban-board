@@ -6,20 +6,37 @@ export const reducer = (state, action) => {
 
   switch (action.type) {
     case ACTIONS.ADD_COLUMN:
-      //delete column from column order property
-      //delete
-      const columnIdNumber = state.columnOrder.push(
-        `column-${state.columnOrder.length + 1}`
-      );
-      const columnId = `column-${columnIdNumber}`;
-
-      return {
-        ...state,
-        columns: {
+      if (!state.columnOrder.length) {
+        const newColumnOrder = ['column-1'];
+        const newColumns = {
           ...state.columns,
-          [columnId]: { id: columnId, title: title, itemIds: [] },
-        },
-      };
+          'column-1': { id: 'column-1', title: title, itemIds: [] },
+        };
+        return { ...state, columnOrder: newColumnOrder, columns: newColumns };
+      } else {
+        const newColumnNumber = Object.keys(state.columns)
+          .map((column) => column.split('-')[1])
+          .sort();
+
+        const nextColumnKey = `column-${
+          parseInt(newColumnNumber[newColumnNumber.length - 1], 10) + 1
+        }`;
+
+        const newColumnOrder = Array.from(state.columnOrder);
+        newColumnOrder.push(nextColumnKey);
+
+        const newColumn = {
+          ...state.columns,
+          [nextColumnKey]: { id: nextColumnKey, title: title, itemIds: [] },
+        };
+
+        return {
+          ...state,
+          columns: newColumn,
+          columnOrder: newColumnOrder,
+        };
+      }
+
     case ACTIONS.ADD_ITEM:
       if (Object.keys(state.items).length) {
         const newItemNumber = Object.keys(state.items)
@@ -121,8 +138,35 @@ export const reducer = (state, action) => {
       };
       return new_State;
     case ACTIONS.REMOVE_COLUMN:
-      console.log(action.payload);
-      return { ...state };
+      //need columnid in paylaod
+      //remove column from the columnOrder array and return new array
+      const newColumnOrder2 = Array.from(state.columnOrder).filter(
+        (column) => column !== column_id
+      );
+      //remove all items associated with removed column and return new array
+      console.log(column_id);
+      const itemsToRemove = Array.from(state.columns[column_id].itemIds);
+      console.log(itemsToRemove);
+      const newItems2 = { ...state.items };
+      console.log(newItems2);
+      itemsToRemove.forEach((itemToRemove) => {
+        console.log('inner loop', itemToRemove);
+        for (const item in newItems2) {
+          console.log('outer loop', item);
+          if (itemToRemove === item) {
+            delete newItems2[item];
+          }
+        }
+      });
+      //remmove column property from the column object
+      const newColumnToRemove = { ...state.columns };
+      delete newColumnToRemove[column_id];
+      return {
+        ...state,
+        columnOrder: newColumnOrder2,
+        items: newItems2,
+        columns: newColumnToRemove,
+      };
     default:
       return state;
   }

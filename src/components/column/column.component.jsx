@@ -6,6 +6,7 @@ import {
   useKanbanBoardContext,
   useKanbanBoardUpdateContext,
 } from '../../KanbanBoardContext';
+import DeleteLogo from './trash.svg';
 
 const Column = ({ title, itemIds, columnId, index }) => {
   const state = useKanbanBoardContext();
@@ -20,13 +21,27 @@ const Column = ({ title, itemIds, columnId, index }) => {
           ref={provided.innerRef}
           className="column"
         >
-          <h1
-            {...provided.dragHandleProps}
-            className="column__title"
-            onClick={() => removeColumn({ title: title })}
+          <div
+            className="column__header"
+            onClick={() => {
+              if (
+                window.confirm('Are you sure you want to delete this list?')
+              ) {
+                removeColumn({ column_id: columnId });
+              }
+            }}
           >
-            {title}
-          </h1>
+            <h1 {...provided.dragHandleProps} className="column__title">
+              {title}
+            </h1>
+
+            <img
+              src={DeleteLogo}
+              alt="trashcan"
+              className="column__item-handle"
+            />
+          </div>
+
           <Droppable droppableId={columnId} type="item">
             {(provided, snapshot) => (
               <div
