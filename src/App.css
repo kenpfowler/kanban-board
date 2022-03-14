@@ -4,6 +4,8 @@
   --background-text-primary: #ffffff;
   --background-text-accent: #61dafb;
   --header-height: 80px;
+  --footer-height: 80px;
+  --scrollbar-height: 5px;
 }
 
 * {
@@ -13,7 +15,18 @@
 }
 .container {
   min-width: 100%;
-  width: fit-content;
+  overflow-x: scroll;
+}
+
+.container::-webkit-scrollbar {
+  display: block;
+  height: var(--scrollbar-height);
+}
+
+.container::-webkit-scrollbar-thumb {
+  background-color: var(--background-text-accent);
+  border-right: none;
+  border-left: none;
 }
 
 header {
@@ -27,14 +40,12 @@ header {
   width: 100%;
 }
 
-.header__logo-container {
-  display: flex;
-  flex-direction: row;
-}
-
 .kanban__board {
   background-color: var(--background-primary);
-  min-height: calc(100vh - var(--header-height));
+  min-height: calc(
+    100vh - var(--header-height) - var(--footer-height) -
+      var(--scrollbar-height)
+  );
   display: flex;
   flex-direction: row;
   align-items: flex-start;

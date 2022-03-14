@@ -6,7 +6,8 @@ import {
   useKanbanBoardContext,
   useKanbanBoardUpdateContext,
 } from './KanbanBoardContext';
-import ReactIcon from './icons/react.icon';
+import Header from './components/header/header.component';
+import Footer from './components/footer/footer.component';
 function App() {
   const [title, setTitle] = useState('');
   const state = useKanbanBoardContext();
@@ -57,37 +58,8 @@ function App() {
       onDragUpdate={onDragUpdate}
       onDragEnd={onDragEnd}
     >
+      <Header setTitle={setTitle} title={title} addColumn={addColumn}></Header>
       <div className="container">
-        <header>
-          <div className="header__logo-container">
-            <ReactIcon />
-            <h1>Kanban Board</h1>
-          </div>
-          <div>
-            <div className="column__input">
-              <input
-                type="text"
-                placeholder="Give your list a title..."
-                value={title}
-                onChange={(e) => {
-                  setTitle(e.target.value);
-                }}
-              />
-              <button
-                className="btn button-secondary"
-                onClick={() => {
-                  if (!title) {
-                    return;
-                  }
-                  addColumn(title);
-                  setTitle('');
-                }}
-              >
-                Create New List
-              </button>
-            </div>
-          </div>
-        </header>
         <Droppable
           droppableId="all-columns"
           direction="horizontal"
@@ -115,6 +87,7 @@ function App() {
           )}
         </Droppable>
       </div>
+      <Footer />
     </DragDropContext>
   );
 }
