@@ -1,7 +1,7 @@
 const initialData = {
   items: {
     'item-1': { id: 'item-1', content: 'Weight Training' },
-    'item-2': { id: 'item-2', content: 'Cleaning the hosue' },
+    'item-2': { id: 'item-2', content: 'Cleaning the house' },
     'item-3': { id: 'item-3', content: 'Cooking' },
     'item-4': { id: 'item-4', content: 'Blogging' },
     'item-5': { id: 'item-5', content: 'Howl at the Moon' },
