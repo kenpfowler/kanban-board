@@ -1,5 +1,4 @@
-import React, { useContext } from 'react';
-import initialData from './initial-data';
+import React, { useContext, useEffect, useCallback } from 'react';
 import { reducer } from './store/reducer';
 import { ACTIONS } from './store/actions';
 import { useReducerWithLogger } from './hooks/useReducerWithLogger.hook.js';
@@ -16,7 +15,10 @@ export const useKanbanBoardUpdateContext = () => {
 };
 
 export const KanbanBoardProvider = ({ children }) => {
-  const [state, dispatch] = useReducerWithLogger(reducer, initialData);
+  const [state, dispatch] = useReducerWithLogger(reducer, {
+    loading: true,
+    errorMessage: null,
+  });
 
   const addColumn = (payload) => {
     dispatch({ type: ACTIONS.ADD_COLUMN, payload: payload });
@@ -50,6 +52,27 @@ export const KanbanBoardProvider = ({ children }) => {
     dispatch({ type: ACTIONS.UPDATE_COLUMN, payload: payload });
   };
 
+  const fetchBoard = useCallback(() => {
+    dispatch({ type: ACTIONS.FETCH_BOARD, loading: true });
+  }, [dispatch]);
+
+  const fetchBoardSuccess = useCallback(
+    (payload) => {
+      dispatch({
+        type: ACTIONS.FETCH_BOARD_SUCCCESS,
+        payload: payload,
+      });
+    },
+    [dispatch]
+  );
+
+  const fetchBoardFailure = useCallback(
+    (payload) => {
+      dispatch({ type: ACTIONS.FETCH_BOARD_FAILURE, payload: payload });
+    },
+    [dispatch]
+  );
+
   const dispatchFunctions = {
     addColumn: addColumn,
     addItem: addItem,
@@ -59,7 +82,25 @@ export const KanbanBoardProvider = ({ children }) => {
     removeItem: removeItem,
     updateColumn: updateColumn,
     updateItem: updateItem,
+    fetchBoard: fetchBoard,
+    fetchBoardSuccess: fetchBoardSuccess,
+    fetchBoardFailure,
   };
+
+  useEffect(() => {
+    async function fetchMyAPI() {
+      try {
+        fetchBoard();
+        const data = await fetch('https://kan-ban-board.herokuapp.com');
+        const json = await data.json();
+        const kabanBoard = json.board;
+        fetchBoardSuccess(kabanBoard);
+      } catch (error) {
+        fetchBoardFailure({ errorMessage: error });
+      }
+    }
+    fetchMyAPI();
+  }, [fetchBoard, fetchBoardFailure, fetchBoardSuccess]);
 
   return (
     <KanbanBoardContext.Provider value={state}>
